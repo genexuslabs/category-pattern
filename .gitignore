@@ -1,0 +1,8 @@
+/dev.msbuild
+/.vs
+/src/Base/CategoryInstance.cs
+/src/Base/CategorySettings.cs
+/src/Base/bin
+/src/Base/obj
+/src/Base/*.user
+/.gxinstall

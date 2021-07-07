@@ -1,0 +1,14 @@
+<%@ Template Language="C#" TargetLanguage="GX" Description="Grid Selected Objects SDT" %>
+<%@ Include Name="Constants.cs" %>
+<%@ Assembly Name="Artech.Patterns.Category" %>
+<%@ Import Namespace="Artech.Patterns.Category" %>
+<%@ Property Name="Object" Type="Artech.Architecture.Common.Objects.KBObject" %>
+<%@ Property Name="Part" Type="Artech.Architecture.Common.Objects.KBObjectPart" %>
+<%@ Property Name="Instance" Type="Artech.Packages.Patterns.Objects.PatternInstance" %>
+<%@ Property Name="Element" Type="Artech.Packages.Patterns.Objects.PatternInstanceElement" %>
+<%
+	CategoryInstance catInstance = new CategoryInstance(Instance);
+%>
+<Object Type="WebPanel" Id="CategoryItemWC" name="<%= catInstance.TransactionsName.CategoryItem %>WC" description="<%= catInstance.TransactionsName.CategoryItem %>  WC">
+      <Properties><Property><Name>Name</Name><Value><%= catInstance.TransactionsName.CategoryItem %>WC</Value></Property><Property><Name>WEB_COMP</Name><Value>Yes</Value></Property><Property><Name>IsDefault</Name><Value>False</Value></Property></Properties>
+ </Object>

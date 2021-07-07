@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{72784FDC-7562-4466-8AEB-C5AC7E7E18ED}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Artech.Patterns.Category</RootNamespace>
+    <AssemblyName>Artech.Patterns.Category</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <GX_SDK_DIR Condition="'$(GX_SDK_DIR)'==''">c:\Program Files (x86)\GeneXus\GeneXus17PlatformSDK\</GX_SDK_DIR>
+    <!-- GX_PROGRAM_DIR is required to execute PatternCodeGen.exe -->
+    <GX_PROGRAM_DIR Condition="'$(GX_PROGRAM_DIR)'==''">$(GX_SDK_DIR)Bin</GX_PROGRAM_DIR>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Artech.Architecture.Common, Version=10.0.0.4536, Culture=neutral, PublicKeyToken=6f5bf81c27b6b8aa, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(GX_SDK_DIR)Bin\Artech.Architecture.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Artech.Architecture.Interfaces, Version=10.0.0.4536, Culture=neutral, PublicKeyToken=6f5bf81c27b6b8aa, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(GX_SDK_DIR)Bin\Artech.Architecture.Interfaces.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Artech.Common, Version=10.0.0.4536, Culture=neutral, PublicKeyToken=6f5bf81c27b6b8aa, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(GX_SDK_DIR)Bin\Artech.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Artech.Common.Helpers, Version=10.0.0.4536, Culture=neutral, PublicKeyToken=6f5bf81c27b6b8aa, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(GX_SDK_DIR)Bin\Artech.Common.Helpers.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Artech.Common.Properties, Version=10.0.0.4536, Culture=neutral, PublicKeyToken=6f5bf81c27b6b8aa, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(GX_SDK_DIR)Bin\Artech.Common.Properties.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Artech.Genexus.Common, Version=10.0.0.4536, Culture=neutral, PublicKeyToken=6f5bf81c27b6b8aa, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(GX_SDK_DIR)Bin\Artech.Genexus.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Artech.Packages.Patterns, Version=10.0.0.4536, Culture=neutral, PublicKeyToken=6f5bf81c27b6b8aa, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(GX_SDK_DIR)Bin\Artech.Packages.Patterns.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Artech.Udm.Framework, Version=10.0.0.4536, Culture=neutral, PublicKeyToken=6f5bf81c27b6b8aa, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(GX_SDK_DIR)Bin\Artech.Udm.Framework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(GX_SDK_DIR)Src\CommonPackageInfo.cs">
+      <Link>Properties\CommonPackageInfo.cs</Link>
+    </Compile>
+    <Compile Include="$(GX_SDK_DIR)Src\CommonPatternInfo.cs">
+      <Link>Properties\CommonPatternInfo.cs</Link>
+    </Compile>
+    <Compile Include="CategoryInstance.cs" />
+    <Compile Include="CategoryPattern.cs" />
+    <Compile Include="CategorySettings.cs" />
+    <Compile Include="Code_Settings\CategoryInstance.cs" />
+    <Compile Include="Code_Settings\CategorySettings.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CategoryInstanceGenerator.cs" />
+    <Compile Include="Resources\Images.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Images.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Messages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="CategoryBuildProcess.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Images.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Images.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages.ja-JP.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages.zh-CHS.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Templates\AddItemRules.dkt">
+      <Link>Templates\AddItemRules.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\AddItemSource.dkt">
+      <Link>Templates\AddItemSource.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\AddItemVariables.dkt">
+      <Link>Templates\AddItemVariables.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\AttributeCategoryId.dkt">
+      <Link>Templates\AttributeCategoryId.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\AttributeCategoryName.dkt">
+      <Link>Templates\AttributeCategoryName.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\AttributeCategoryParentId.dkt">
+      <Link>Templates\AttributeCategoryParentId.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\AttributeCategoryParentName.dkt">
+      <Link>Templates\AttributeCategoryParentName.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\Catalog.dkt">
+      <Link>Templates\Catalog.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\CatalogRules.dkt">
+      <Link>Templates\CatalogRules.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\CatalogSource.dkt">
+      <Link>Templates\CatalogSource.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\CatalogVariables.dkt">
+      <Link>Templates\CatalogVariables.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\CategoryItemWC.dkt">
+      <Link>Templates\CategoryItemWC.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\CategoryItemWCEvents.dkt">
+      <Link>Templates\CategoryItemWCEvents.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\CategoryItemWCRules.dkt">
+      <Link>Templates\CategoryItemWCRules.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\CategoryItemWCVariables.dkt">
+      <Link>Templates\CategoryItemWCVariables.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\CategoryItemWCWebForm.dkt">
+      <Link>Templates\CategoryItemWCWebForm.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\CategoryRelationRules.dkt">
+      <Link>Templates\CategoryRelationRules.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\CategoryRelationStructure.dkt">
+      <Link>Templates\CategoryRelationStructure.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\CategoryRelationVariables.dkt">
+      <Link>Templates\CategoryRelationVariables.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\CategoryRelationWebForm.dkt">
+      <Link>Templates\CategoryRelationWebForm.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\CategoryStructure.dkt">
+      <Link>Templates\CategoryStructure.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\CategoryWebForm.dkt">
+      <Link>Templates\CategoryWebForm.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\DeleteItemRules.dkt">
+      <Link>Templates\DeleteItemRules.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\DeleteItemSource.dkt">
+      <Link>Templates\DeleteItemSource.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\DeleteItemVariables.dkt">
+      <Link>Templates\DeleteItemVariables.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\GroupStructure.dkt">
+      <Link>Templates\GroupStructure.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\ItemByCategoryWC.dkt">
+      <Link>Templates\ItemByCategoryWC.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\ItemByCategoryWCEvents.dkt">
+      <Link>Templates\ItemByCategoryWCEvents.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\ItemByCategoryWCRules.dkt">
+      <Link>Templates\ItemByCategoryWCRules.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\ItemByCategoryWCVariables.dkt">
+      <Link>Templates\ItemByCategoryWCVariables.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\ItemByCategoryWCWebForm.dkt">
+      <Link>Templates\ItemByCategoryWCWebForm.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\SubCatalog.dkt">
+      <Link>Templates\SubCatalog.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\SubCatalogRules.dkt">
+      <Link>Templates\SubCatalogRules.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\SubCatalogSource.dkt">
+      <Link>Templates\SubCatalogSource.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\SubCatalogVariables.dkt">
+      <Link>Templates\SubCatalogVariables.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\TreeNodeSdtStructure.dkt">
+      <Link>Templates\TreeNodeSdtStructure.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\TreeViewItemEvents.dkt">
+      <Link>Templates\TreeViewItemEvents.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\TreeViewItemVariables.dkt">
+      <Link>Templates\TreeViewItemVariables.dkt</Link>
+    </Content>
+    <Content Include="..\Templates\TreeViewItemWebForm.dkt">
+      <Link>Templates\TreeViewItemWebForm.dkt</Link>
+    </Content>
+    <Content Include="Resources\Icons\ObjectAttribute.ico" />
+    <Content Include="Resources\Icons\ObjectTransaction.ico" />
+    <Content Include="Resources\Icons\StructureLevel.ico" />
+    <Content Include="Resources\Icons\TextBlock.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PreBuildEvent>"$(GX_SDK_DIR)Patterns\CodeGen\PatternCodeGen.exe" "$(ProjectDir)..\Definitions\Category.Pattern" "$(ProjectDir)CategoryInstance.cs" "$(ProjectDir)CategorySettings.cs"
+    </PreBuildEvent>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,38 @@
+<%@ Template Language="C#" TargetLanguage="GX" Description="Grid Selected Objects SDT" %>
+<%@ Include Name="Constants.cs" %>
+<%@ Assembly Name="Artech.Patterns.Category" %>
+<%@ Import Namespace="Artech.Patterns.Category" %>
+<%@ Property Name="Object" Type="Artech.Architecture.Common.Objects.KBObject" %>
+<%@ Property Name="Part" Type="Artech.Architecture.Common.Objects.KBObjectPart" %>
+<%@ Property Name="Instance" Type="Artech.Packages.Patterns.Objects.PatternInstance" %>
+<%@ Property Name="Element" Type="Artech.Packages.Patterns.Objects.PatternInstanceElement" %>
+
+<%
+	CategoryInstance catInstance = new CategoryInstance(Instance);
+	
+%>
+<Part type="<%= PartType.DataProviderSource %>">
+<Source><![CDATA[
+TreeNode [one]
+where <%= catInstance.AttributesName.CategoryId %> = &<%= catInstance.AttributesName.CategoryId %>
+{
+	Name = <%= catInstance.AttributesName.CategoryName %>
+	Childs
+	where <%= catInstance.AttributesName.CategoryId %> = &<%= catInstance.AttributesName.CategoryId %>
+	{
+		Name = ItemName
+	}
+	Children.Insert()
+}
+
+SubGroup Children
+Dummy [NoOutput]
+where <%= catInstance.AttributesName.CategoryParentId %> = &<%= catInstance.AttributesName.CategoryId %>
+{
+	&node = <%= catInstance.ParentObject.Name %>SubCatalog(<%= catInstance.AttributesName.CategoryId %>)
+	Childs = &node [IsCollection]
+}
+EndSubGroup
+]]>
+	</Source>
+</Part>

@@ -1,0 +1,58 @@
+<%@ Template Language="C#" TargetLanguage="GX" Description="Grid Selected Objects SDT" %>
+<%@ Include Name="Constants.cs" %>
+<%@ Assembly Name="Artech.Patterns.Category" %>
+<%@ Import Namespace="Artech.Patterns.Category" %>
+<%@ Property Name="Object" Type="Artech.Architecture.Common.Objects.KBObject" %>
+<%@ Property Name="Part" Type="Artech.Architecture.Common.Objects.KBObjectPart" %>
+<%@ Property Name="Instance" Type="Artech.Packages.Patterns.Objects.PatternInstance" %>
+<%@ Property Name="Element" Type="Artech.Packages.Patterns.Objects.PatternInstanceElement" %>
+<%
+	CategoryInstance catInstance = new CategoryInstance(Instance);
+	
+%>
+<Part type="<%= PartType.Events %>">
+<Source><![CDATA[Event Start
+	&<%= catInstance.AttributesName.CategoryId %>.Visible = 0
+EndEvent  // Start
+
+Event Refresh
+	&<%= catInstance.AttributesName.CategoryId %>.Visible = 0
+EndEvent  // Refresh
+	
+Event Grid1.Load
+<%	foreach (AttributeElement att in catInstance.ViewItemAttributes)	
+	{	
+		if (att.Visible && att.Link)
+		{	
+			bool addLink = true;
+			if (att.Attribute != null)
+			{
+				int controlType = att.Attribute.GetPropertyValue<int>(Properties.ATT.ControlType);
+				int editSuggest = att.Attribute.GetPropertyValue<int>(Properties.ATT.Suggest);
+				int editInputType = att.Attribute.GetPropertyValue<int>(Properties.ATT.InputType);
+
+				if ((controlType == Properties.ATT.ControlType_Values.DynamicComboBox) ||
+					(controlType == Properties.ATT.ControlType_Values.DynamicListBox) ||
+					(controlType == Properties.ATT.ControlType_Values.Edit && (editInputType == Properties.ATT.InputType_Values.Descriptions || editSuggest != Properties.ATT.Suggest_Values.No)))
+				{
+					//No link property.
+					addLink = false;				
+				}
+			}
+			if (addLink)
+			{
+				if (WebPanel.ResolveName(Object.Module, "View" + catInstance.ParentObject.Name) != null)
+				{	%>
+	<%= att.Attribute.Name %>.Link = <%= "View" + catInstance.ParentObject.Name %>.Link(<%= catInstance.ParentObject.Structure.Root.PrimaryKey[0].Name %>)	
+<%				}
+				else
+				{   %>
+	<%= att.Attribute.Name %>.Link = <%= catInstance.ParentObject.Name %>.Link("viewer", <%= catInstance.ParentObject.Structure.Root.PrimaryKey[0].Name %>)				
+<%				}
+			}
+		}
+	}	%>	
+	
+EndEvent
+]]></Source>
+</Part>

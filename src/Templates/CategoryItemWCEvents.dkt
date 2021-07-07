@@ -1,0 +1,60 @@
+<%@ Template Language="C#" TargetLanguage="GX" Description="Grid Selected Objects SDT" %>
+<%@ Include Name="Constants.cs" %>
+<%@ Assembly Name="Artech.Patterns.Category" %>
+<%@ Import Namespace="Artech.Patterns.Category" %>
+<%@ Property Name="Object" Type="Artech.Architecture.Common.Objects.KBObject" %>
+<%@ Property Name="Part" Type="Artech.Architecture.Common.Objects.KBObjectPart" %>
+<%@ Property Name="Instance" Type="Artech.Packages.Patterns.Objects.PatternInstance" %>
+<%@ Property Name="Element" Type="Artech.Packages.Patterns.Objects.PatternInstanceElement" %>
+<%
+	CategoryInstance catInstance = new CategoryInstance(Instance);
+	
+%>
+<Part type="<%= PartType.Events %>">
+<Source><![CDATA[Event Start
+	&<%= catInstance.AttributesName.CategoryId %>.Visible = 0
+EndEvent  // Start
+
+Event AddItem.Click
+	If not &<%= catInstance.ParentObject.Structure.Root.PrimaryKey[0].Name %>.IsEmpty()
+		Add<%= catInstance.ParentObject.Name %>.Call(&<%= catInstance.AttributesName.CategoryId %>, &<%= catInstance.ParentObject.Structure.Root.PrimaryKey[0].Name %>)
+		&AssItemId.Additem(&<%= catInstance.ParentObject.Structure.Root.PrimaryKey[0].Name %>, <%= catInstance.ParentObject.Structure.Root.DescriptionAttribute.Name%>)
+		&<%= catInstance.ParentObject.Structure.Root.PrimaryKey[0].Name %>.Removeitem(&<%= catInstance.ParentObject.Structure.Root.PrimaryKey[0].Name %>)
+	EndIf
+Endevent
+
+Event DelItem.Click
+	If not &AssItemId.IsEmpty()
+		Delete<%= catInstance.ParentObject.Name %>.Call(&<%= catInstance.AttributesName.CategoryId %>, &AssItemId)
+		&AssItemId.RemoveItem(&AssItemId)
+		&<%= catInstance.ParentObject.Structure.Root.PrimaryKey[0].Name %>.AddItem(&AssItemId, <%= catInstance.ParentObject.Structure.Root.DescriptionAttribute.Name%>)
+	EndIf
+EndEvent
+
+Event Refresh
+	&<%= catInstance.ParentObject.Structure.Root.PrimaryKey[0].Name %>.Clear()
+	for each order <%= catInstance.ParentObject.Structure.Root.PrimaryKey[0].Name %>
+		for each order <%= catInstance.AttributesName.CategoryId %>, <%= catInstance.ParentObject.Structure.Root.PrimaryKey[0].Name %>
+		where <%= catInstance.AttributesName.CategoryId %> = &<%= catInstance.AttributesName.CategoryId %>
+			//nothing        
+		when none
+			&<%= catInstance.ParentObject.Structure.Root.PrimaryKey[0].Name %>.Additem(<%= catInstance.ParentObject.Structure.Root.PrimaryKey[0].Name %>, <%= catInstance.ParentObject.Structure.Root.DescriptionAttribute.Name%>)
+		 endfor
+	endfor
+	
+	&AssItemId.Clear()
+	for each order <%= catInstance.ParentObject.Structure.Root.PrimaryKey[0].Name %>
+		for each order <%= catInstance.AttributesName.CategoryId %>, <%= catInstance.ParentObject.Structure.Root.PrimaryKey[0].Name %>
+			where <%= catInstance.AttributesName.CategoryId %> = &<%= catInstance.AttributesName.CategoryId %>
+			&AssItemId.Additem(<%= catInstance.ParentObject.Structure.Root.PrimaryKey[0].Name %>, <%= catInstance.ParentObject.Structure.Root.DescriptionAttribute.Name %>)
+		when none
+			//nothing        
+		endfor
+	endfor
+
+	&<%= catInstance.AttributesName.CategoryId %>.Visible = 0
+EndEvent  // Refresh
+
+
+]]></Source>
+</Part>

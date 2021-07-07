@@ -1,0 +1,20 @@
+<%@ Template Language="C#" TargetLanguage="GX" Description="Category Trn" %>
+<%@ Assembly Name="Artech.Patterns.Category" %>
+<%@ Import Namespace="Artech.Patterns.Category" %>
+<%@ Property Name="Object" Type="Artech.Architecture.Common.Objects.KBObject" %>
+<%@ Property Name="Part" Type="Artech.Architecture.Common.Objects.KBObjectPart" %>
+<%@ Property Name="Instance" Type="Artech.Packages.Patterns.Objects.PatternInstance" %>
+<%@ Property Name="Element" Type="Artech.Packages.Patterns.Objects.PatternInstanceElement" %>
+
+<%
+	CategoryInstance catInstance = new CategoryInstance(Instance);
+
+%>
+<Part type="<%= PartType.Structure %>">
+	<Level Name="<%= catInstance.TransactionsName.Category  %>" Type="<%= catInstance.TransactionsName.Category  %>" Description="<%= catInstance.TransactionsName.Category  %>" >
+		<Attribute key="True"><%= catInstance.AttributesName.CategoryId %></Attribute>
+		<Attribute key="False"><%= catInstance.AttributesName.CategoryName %></Attribute>
+		<Attribute key="False" isNullable="True"><%= catInstance.AttributesName.CategoryParentId %></Attribute>
+		<Attribute key="False"><%= catInstance.AttributesName.CategoryParentName %></Attribute>
+	</Level>
+</Part>

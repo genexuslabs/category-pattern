@@ -1,0 +1,28 @@
+<%@ Template Language="C#" TargetLanguage="GX" Description="Grid Selected Objects SDT" %>
+<%@ Include Name="Constants.cs" %>
+<%@ Assembly Name="Artech.Patterns.Category" %>
+<%@ Import Namespace="Artech.Patterns.Category" %>
+<%@ Property Name="Object" Type="Artech.Architecture.Common.Objects.KBObject" %>
+<%@ Property Name="Part" Type="Artech.Architecture.Common.Objects.KBObjectPart" %>
+<%@ Property Name="Instance" Type="Artech.Packages.Patterns.Objects.PatternInstance" %>
+<%@ Property Name="Element" Type="Artech.Packages.Patterns.Objects.PatternInstanceElement" %>
+
+<%
+	CategoryInstance catInstance = new CategoryInstance(Instance);
+	StructurePart structureObject = catInstance.ParentObject.Structure;
+	
+%>
+<Part type="<%= PartType.Structure %>">
+	<Level Name="<%= catInstance.TransactionsName.CategoryItem  %>" >
+		<Attribute key="True"><%= catInstance.AttributesName.CategoryId %></Attribute>
+		<Attribute key="False"><%= catInstance.AttributesName.CategoryName %></Attribute>
+<%  foreach (TransactionAttribute att in structureObject.Root.PrimaryKey)
+	{	%>
+		<Attribute key="True"><%= att.Name %></Attribute>
+<%	}	%>
+<%  if (structureObject.Root.DescriptionAttribute!=null)
+	{	%>
+		<Attribute key="False"><%= structureObject.Root.DescriptionAttribute.Name %></Attribute>
+<%  }	%>
+	</Level>
+</Part>

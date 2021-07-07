@@ -1,0 +1,54 @@
+<%@ Template Language="C#" TargetLanguage="GX" Description="Grid Selected Objects SDT" %>
+<%@ Include Name="Constants.cs" %>
+<%@ Assembly Name="Artech.Patterns.Category" %>
+<%@ Import Namespace="Artech.Patterns.Category" %>
+<%@ Property Name="Object" Type="Artech.Architecture.Common.Objects.KBObject" %>
+<%@ Property Name="Part" Type="Artech.Architecture.Common.Objects.KBObjectPart" %>
+<%@ Property Name="Instance" Type="Artech.Packages.Patterns.Objects.PatternInstance" %>
+<%@ Property Name="Element" Type="Artech.Packages.Patterns.Objects.PatternInstanceElement" %>
+
+<%
+	CategoryInstance catInstance = new CategoryInstance(Instance);
+	
+%>
+<Part type="<%= PartType.DataProviderSource %>">
+<Source><![CDATA[TreeNodeCollection 
+where <%= catInstance.AttributesName.CategoryParentId %> = &<%= catInstance.AttributesName.CategoryParentId %> or (&<%= catInstance.AttributesName.CategoryParentId %>=0 and <%= catInstance.AttributesName.CategoryParentId %>.IsNull() )
+{
+	Id = str(<%= catInstance.AttributesName.CategoryId %>)
+	Name = <%= catInstance.AttributesName.CategoryName %>
+
+	//Use the Tree Node Click event now	
+	Nodes = <%= catInstance.ParentObject.Name %>Catalog.udp(<%= catInstance.AttributesName.CategoryId %>)
+}
+<%	if(catInstance.ShowLeafItemsInTreeView)
+	{  %>
+TreeNodeCollection
+where <%= catInstance.AttributesName.CategoryId %> = &<%= catInstance.AttributesName.CategoryParentId %> or (&<%= catInstance.AttributesName.CategoryParentId %>=0 and <%= catInstance.AttributesName.CategoryId %>.IsNull() )
+{
+<%	if ( (catInstance.ParentObject.Structure.Root.PrimaryKey[0].Attribute.Type == eDBType.LONGVARCHAR) ||
+		 (catInstance.ParentObject.Structure.Root.PrimaryKey[0].Attribute.Type == eDBType.VARCHAR) ||
+		 (catInstance.ParentObject.Structure.Root.PrimaryKey[0].Attribute.Type == eDBType.CHARACTER)  )	
+	{	%>	
+	Id = <%= catInstance.ParentObject.Structure.Root.PrimaryKey[0].Name %>
+<%  }
+	else
+	{	%>
+	Id = str(<%= catInstance.ParentObject.Structure.Root.PrimaryKey[0].Name %>)
+<%	}	%>		
+
+	Name = <%= catInstance.ParentObject.Structure.Root.DescriptionAttribute.Name%>
+	<% if (WebPanel.ResolveName(Object.Module, "View" + catInstance.ParentObject.Name) != null)
+		{	%>
+	Link = View<%= catInstance.ParentObject.Name %>.Link(<%= catInstance.ParentObject.Structure.Root.PrimaryKey[0].Name %>)	
+	<%	}
+		else
+		{	%>
+	Link = <%= catInstance.ParentObject.Name %>.Link("viewer" , <%= catInstance.ParentObject.Structure.Root.PrimaryKey[0].Name %>)
+	<%	}	%>	
+}
+<%	}  %>
+]]>
+	</Source>
+</Part>
+
