@@ -14,10 +14,13 @@ Here you can find the source of the Category pattern, included with GeneXus unti
 | `Deploy` | Copies the pattern files to the directory specified by `GXInstall` variable. |
 
 Usage samples:
-
+- Buids the pattern with Configuration=Debug
 `msbuild workflows.build /p:GX_SDK_DIR="c:\mySDK\\"`
+
+- Buids the pattern with Configuration=Release
 `msbuild workflows.build /t:Build /p:Configuration=Release;GX_SDK_DIR="c:\mySDK\\"`
 
+- Deploys pattern files to the specified GeneXus installation
 `msbuild workflows.build /t:Deploy /p:GXInstall="c:\myGX17"`
 
 ### MSBuild variables
