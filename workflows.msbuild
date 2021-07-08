@@ -6,7 +6,7 @@
 	<Import Project="dev.msbuild" Condition="Exists('dev.msbuild')" />
 
 	<PropertyGroup>
-		<Configuration Condition="'$(Configuration)'==''">Release</Configuration>
+		<Configuration Condition="'$(Configuration)'==''">Debug</Configuration>
 		<ProjectFile>Pattern.sln</ProjectFile>
 
 		<GX_SDK_DIR Condition="'$(GX_SDK_DIR)'==''">c:\Program Files (x86)\GeneXus\GeneXus17PlatformSDK\</GX_SDK_DIR>
