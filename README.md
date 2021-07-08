@@ -18,22 +18,22 @@ Here you can find the source of the Category pattern, a GeneXus pattern that was
 Usage samples:
 - Builds the pattern with Configuration=Debug
 
-`c:repo\category-pattern>msbuild workflows.msbuild /p:GX_SDK_DIR="c:\mySDK\\"`
+`c:repo\category-pattern>msbuild workflows.msbuild /p:GX_SDK_DIR="c:\mySDK\ /p:GX_PROGRAM_DIR="c:\myGX17\\"`
 
 - Builds the pattern with Configuration=Release
 
-`c:repo\category-pattern>msbuild workflows.msbuild /t:Build /p:Configuration=Release /p:GX_SDK_DIR="c:\mySDK\\"`
+`c:repo\category-pattern>msbuild workflows.msbuild /t:Build /p:Configuration=Release /p:GX_SDK_DIR="c:\mySDK\ /p:GX_PROGRAM_DIR="c:\myGX17\\"`
 
 - Deploys pattern files to the specified GeneXus installation
 
-`c:repo\category-pattern>msbuild workflows.msbuild /t:Deploy /p:GXInstall="c:\myGX17"`
+`c:repo\category-pattern>msbuild workflows.msbuild /t:Deploy  /p:GX_PROGRAM_DIR="c:\myGX17\\"`
 
 ### MSBuild variables
 
 | Name | Description |
 | --- | --- |
-| `Configuration` | Specifies the configuration. `Release` is the default value. Valid configurations: `Debug` or `Release`. |
-| `GXInstall` | Path to a GeneXus installation where you want to test the Category pattern. If it is not specified, the deployed files are copied to the directory `.gxinstall`. |
+| `Configuration` | Specifies the configuration. `Debug` is the default value. Valid configurations: `Debug` or `Release`. |
+| `GX_PROGRAM_DIR` | Path to a GeneXus installation. It is required for the `Build` target. In the `Deploy` target, if it is not specified, the built files are copied to the directory `.gxinstall`. |
 | `GX_SDK_DIR` | Path to a GeneXus SDK installation. |
 
 ## Documentation
