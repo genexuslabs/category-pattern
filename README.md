@@ -8,7 +8,7 @@ Here you can find the source of the Category pattern, a GeneXus pattern that was
 - [GeneXus Platform SDK 17 Upgrade 4](https://www.genexus.com/en/developers/downloadcenter?data=5924)
 
 ## Build & Deploy
-`workflows.build` is defined to simplify the Build and Deploy operations.
+[`workflows.msbuild`](workflows.msbuild) is defined to simplify the Build and Deploy operations.
 
 | Target | Description |
 | --- | --- |
