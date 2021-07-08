@@ -18,15 +18,15 @@ Here you can find the source of the Category pattern, a GeneXus pattern that was
 Usage samples:
 - Builds the pattern with Configuration=Debug
 
-`c:repo\category-pattern>msbuild workflows.build /p:GX_SDK_DIR="c:\mySDK\\"`
+`c:repo\category-pattern>msbuild workflows.msbuild /p:GX_SDK_DIR="c:\mySDK\\"`
 
 - Builds the pattern with Configuration=Release
 
-`c:repo\category-pattern>msbuild workflows.build /t:Build /p:Configuration=Release;GX_SDK_DIR="c:\mySDK\\"`
+`c:repo\category-pattern>msbuild workflows.msbuild /t:Build /p:Configuration=Release;GX_SDK_DIR="c:\mySDK\\"`
 
 - Deploys pattern files to the specified GeneXus installation
 
-`c:repo\category-pattern>msbuild workflows.build /t:Deploy /p:GXInstall="c:\myGX17"`
+`c:repo\category-pattern>msbuild workflows.msbuild /t:Deploy /p:GXInstall="c:\myGX17"`
 
 ### MSBuild variables
 
