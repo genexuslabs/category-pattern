@@ -1,5 +1,7 @@
 # GeneXus Category Pattern
-Here you can find the source of the Category pattern, included with GeneXus until version 17 until it was deprecated after Upgrade #4.
+⚠️ This repo is not longer under development.
+
+Here you can find the source of the Category pattern, a GeneXus pattern that was part of it until first upgrades of its version 17.
 
 ## Requirements
 - Build Tools for Visual Studio 2019
