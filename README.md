@@ -22,7 +22,7 @@ Usage samples:
 
 - Builds the pattern with Configuration=Release
 
-`c:repo\category-pattern>msbuild workflows.msbuild /t:Build /p:Configuration=Release;GX_SDK_DIR="c:\mySDK\\"`
+`c:repo\category-pattern>msbuild workflows.msbuild /t:Build /p:Configuration=Release /p:GX_SDK_DIR="c:\mySDK\\"`
 
 - Deploys pattern files to the specified GeneXus installation
 
