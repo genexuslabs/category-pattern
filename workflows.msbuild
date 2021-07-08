@@ -9,8 +9,11 @@
 		<Configuration Condition="'$(Configuration)'==''">Debug</Configuration>
 		<ProjectFile>Pattern.sln</ProjectFile>
 
-		<GX_SDK_DIR Condition="'$(GX_SDK_DIR)'==''">c:\Program Files (x86)\GeneXus\GeneXus17PlatformSDK\</GX_SDK_DIR>
-		<GXInstall Condition="'$(GXInstall)'==''">.gxinstall</GXInstall>
+		<GXInstall Condition="'$(GX_PROGRAM_DIR)'!=''">$(GX_PROGRAM_DIR)</GXInstall>
+		<GXInstall Condition="'$(GX_PROGRAM_DIR)'==''">.gxinstall</GXInstall>
+
+		<GX_SDK_DIR Condition="'$(GX_SDK_DIR)'!='' and ! $(GX_SDK_DIR.EndsWith('\'))">$(GX_SDK_DIR)\</GX_SDK_DIR>
+		<GX_PROGRAM_DIR Condition="'$(GX_PROGRAM_DIR)'!='' and ! $(GX_PROGRAM_DIR.EndsWith('\'))">$(GX_PROGRAM_DIR)\</GX_PROGRAM_DIR>
 	</PropertyGroup>
 
 	<Target Name="Build">
@@ -18,15 +21,14 @@
 			<Action Condition="'$(Action)'==''">Restore;Build</Action>
 		</PropertyGroup>
 		<!-- Use the "Exec" task instead of "MSbuild" to preserve the value of GX_PROGRAM_DIR. -->
-		<Exec Command='"$(MSBuildBinPath)\msbuild.exe" $(ProjectFile) /t:$(Action) /p:Configuration=$(Configuration) /p:GX_SDK_DIR="$(GX_SDK_DIR)\"' />
+		<Exec Command='"$(MSBuildBinPath)\msbuild.exe" $(ProjectFile) /t:$(Action) /p:Configuration=$(Configuration) /p:GX_SDK_DIR="$(GX_SDK_DIR)\" /p:GX_PROGRAM_DIR="$(GX_PROGRAM_DIR)\"' />
 	</Target>
 	<Target Name="BeforeBuild" BeforeTargets="Build">
-		<SetEnvironmentVariable Name="GX_PROGRAM_DIR" Value="$(GX_SDK_DIR)bin" />
 		<Message Text="
 ----------
 PRINT ENVIRONMENT VARIABLES:
 * GX_SDK_DIR = $(GX_SDK_DIR)
-* GX_PROGRAM_DIR = $(GX_SDK_DIR)bin
+* GX_PROGRAM_DIR = $(GX_PROGRAM_DIR)
 ----------
 " Importance="high"/>
 	</Target>
