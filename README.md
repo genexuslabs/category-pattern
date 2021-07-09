@@ -1,5 +1,5 @@
 # GeneXus Category Pattern
-⚠️ This repo is not longer under development.
+⚠️ This repo is no longer under development.
 
 Here you can find the source of the Category pattern, a GeneXus pattern that was part of it until first upgrades of its version 17.
 
@@ -13,7 +13,7 @@ Here you can find the source of the Category pattern, a GeneXus pattern that was
 | Target | Description |
 | --- | --- |
 | `Build` | Builds the entire pattern for the specified configuration. This target is configured as the default one, it can be omitted at the command-line. |
-| `Deploy` | Copies the pattern files to the directory specified by `GXInstall` variable. |
+| `Deploy` | Copies the pattern files to the directory specified by `GX_PROGRAM_DIR` variable. |
 
 Usage samples:
 - Builds the pattern with Configuration=Debug
