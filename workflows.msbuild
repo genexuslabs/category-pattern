@@ -11,19 +11,20 @@
 
 		<GXInstall Condition="'$(GX_PROGRAM_DIR)'!=''">$(GX_PROGRAM_DIR)</GXInstall>
 		<GXInstall Condition="'$(GX_PROGRAM_DIR)'==''">.gxinstall</GXInstall>
-
-		<GX_SDK_DIR Condition="'$(GX_SDK_DIR)'!='' and ! $(GX_SDK_DIR.EndsWith('\'))">$(GX_SDK_DIR)\</GX_SDK_DIR>
-		<GX_PROGRAM_DIR Condition="'$(GX_PROGRAM_DIR)'!='' and ! $(GX_PROGRAM_DIR.EndsWith('\'))">$(GX_PROGRAM_DIR)\</GX_PROGRAM_DIR>
 	</PropertyGroup>
 
-	<Target Name="Build">
+	<Target Name="Build" DependsOnTargets="BeforeBuild">
 		<PropertyGroup>
 			<Action Condition="'$(Action)'==''">Restore;Build</Action>
 		</PropertyGroup>
 		<!-- Use the "Exec" task instead of "MSbuild" to preserve the value of GX_PROGRAM_DIR. -->
-		<Exec Command='"$(MSBuildBinPath)\msbuild.exe" $(ProjectFile) /t:$(Action) /p:Configuration=$(Configuration) /p:GX_SDK_DIR="$(GX_SDK_DIR)\" /p:GX_PROGRAM_DIR="$(GX_PROGRAM_DIR)\"' />
+		<Exec Command='"$(MSBuildBinPath)\msbuild.exe" $(ProjectFile) /t:$(Action) /p:Configuration=$(Configuration) /p:GX_SDK_DIR="$(GX_SDK_DIR_WITH_SLASH)\"' />
 	</Target>
-	<Target Name="BeforeBuild" BeforeTargets="Build">
+	<Target Name="BeforeBuild">
+		<PropertyGroup>
+			<GX_SDK_DIR_WITH_SLASH Condition="'$(GX_SDK_DIR)'!='' and ! $(GX_SDK_DIR.EndsWith('\'))">$(GX_SDK_DIR)\</GX_SDK_DIR_WITH_SLASH>
+			<GX_SDK_DIR_WITH_SLASH Condition="'$(GX_SDK_DIR_WITH_SLASH)'==''">$(GX_SDK_DIR)</GX_SDK_DIR_WITH_SLASH>
+		</PropertyGroup>
 		<Message Text="
 ----------
 PRINT ENVIRONMENT VARIABLES:
@@ -31,6 +32,8 @@ PRINT ENVIRONMENT VARIABLES:
 * GX_PROGRAM_DIR = $(GX_PROGRAM_DIR)
 ----------
 " Importance="high"/>
+		<Message Text="[info] Setting environment variable GX_PROGRAM_DIR=&quot;$(GX_SDK_DIR_WITH_SLASH)Bin&quot; (required to execute PatternCodeGen.exe)" Condition="'$(GX_PROGRAM_DIR)'=='' and '$(GX_SDK_DIR_WITH_SLASH)'!=''"/>
+		<SetEnvironmentVariable Name="GX_PROGRAM_DIR" Value="$(GX_SDK_DIR_WITH_SLASH)Bin" Condition="'$(GX_PROGRAM_DIR)'=='' and '$(GX_SDK_DIR_WITH_SLASH)'!=''"/>
 	</Target>
 
 	<Target Name="Deploy">
