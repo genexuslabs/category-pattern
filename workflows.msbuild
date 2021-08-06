@@ -6,10 +6,10 @@
 	<Import Project="dev.msbuild" Condition="Exists('dev.msbuild')" />
 
 	<PropertyGroup>
-		<Configuration Condition="'$(Configuration)'==''">Release</Configuration>
+		<Configuration Condition="'$(Configuration)'==''">Debug</Configuration>
 		<ProjectFile>Pattern.sln</ProjectFile>
 
-		<GX_SDK_DIR Condition="'$(GX_SDK_DIR)'==''">c:\Program Files (x86)\GeneXus\GeneXus17PlatformSDK\</GX_SDK_DIR>
+		<GXInstall>$(GX_PROGRAM_DIR)</GXInstall>
 		<GXInstall Condition="'$(GXInstall)'==''">.gxinstall</GXInstall>
 	</PropertyGroup>
 
@@ -17,16 +17,24 @@
 		<PropertyGroup>
 			<Action Condition="'$(Action)'==''">Restore;Build</Action>
 		</PropertyGroup>
+		<Message Text="[info] Setting environment variable GX_PROGRAM_DIR=&quot;$(GX_PROGRAM_DIR)&quot; (required to execute PatternCodeGen.exe)" Condition="'$(GX_PROGRAM_DIR)'!='$(GX_PROGRAM_DIR_FOR_BUILD)'"/>
+		<SetEnvironmentVariable Name="GX_PROGRAM_DIR" Value="$(GX_PROGRAM_DIR)" Condition="'$(GX_PROGRAM_DIR)'!='$(GX_PROGRAM_DIR_FOR_BUILD)'"/>
 		<!-- Use the "Exec" task instead of "MSbuild" to preserve the value of GX_PROGRAM_DIR. -->
-		<Exec Command='"$(MSBuildBinPath)\msbuild.exe" $(ProjectFile) /t:$(Action) /p:Configuration=$(Configuration) /p:GX_SDK_DIR="$(GX_SDK_DIR)\"' />
+		<Exec Command='"$(MSBuildBinPath)\msbuild.exe" $(ProjectFile) /t:$(Action) /p:Configuration=$(Configuration) /p:GX_SDK_DIR="$(GX_SDK_DIR_WITH_SLASH)\"' />
 	</Target>
 	<Target Name="BeforeBuild" BeforeTargets="Build">
-		<SetEnvironmentVariable Name="GX_PROGRAM_DIR" Value="$(GX_SDK_DIR)bin" />
+		<PropertyGroup>
+			<GX_SDK_DIR_WITH_SLASH Condition="'$(GX_SDK_DIR)'!='' and ! $(GX_SDK_DIR.EndsWith('\'))">$(GX_SDK_DIR)\</GX_SDK_DIR_WITH_SLASH>
+			<GX_SDK_DIR_WITH_SLASH Condition="'$(GX_SDK_DIR_WITH_SLASH)'==''">$(GX_SDK_DIR)</GX_SDK_DIR_WITH_SLASH>
+			<GX_PROGRAM_DIR Condition="'$(GX_PROGRAM_DIR)'==''">$(GX_SDK_DIR_WITH_SLASH)Bin</GX_PROGRAM_DIR>
+			<GX_PROGRAM_DIR_FOR_BUILD>$([System.Environment]::GetEnvironmentVariable('GX_PROGRAM_DIR'))</GX_PROGRAM_DIR_FOR_BUILD>
+		</PropertyGroup>
 		<Message Text="
 ----------
-PRINT ENVIRONMENT VARIABLES:
+PRINT BUILD REQUIRED ENVIRONMENT VARIABLES VALUES:
 * GX_SDK_DIR = $(GX_SDK_DIR)
-* GX_PROGRAM_DIR = $(GX_SDK_DIR)bin
+* GX_PROGRAM_DIR = (argument) $(GX_PROGRAM_DIR)
+                   (environment) $(GX_PROGRAM_DIR_FOR_BUILD)
 ----------
 " Importance="high"/>
 	</Target>
@@ -57,8 +65,7 @@ PRINT ENVIRONMENT VARIABLES:
 	<Target Name="BeforeDeploy" BeforeTargets="Deploy">
 		<Message Text="
 ----------
-COMMON ENVIRONMENT VARIABLES:
-* GXInstall = $(GXInstall)
+DEPLOY CATEGORY PATTERN TO '$(GXInstall)'
 ----------
 " Importance="high"/>
 	</Target>
